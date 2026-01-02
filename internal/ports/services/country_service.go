@@ -2,7 +2,6 @@ package services
 
 import (
 	"country-state-city-api/internal/ports/repositories"
-	"log"
 )
 
 type CountryService struct {
@@ -19,7 +18,6 @@ func (service *CountryService) GetAllCountryNames() []string {
 	var countryNames []string
 
 	for _, country := range countries {
-		log.Println(country.Name)
 		countryNames = append(countryNames, country.Name)
 	}
 
