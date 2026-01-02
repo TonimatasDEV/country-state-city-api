@@ -20,11 +20,11 @@ type Country struct {
 	Subregion      string       `json:"subregion"`
 	SubregionID    int          `json:"subregion_id"`
 	Nationality    string       `json:"nationality"`
-	Timezones      []Timezones  `json:"timezones"`
+	Timezones      []Timezone   `json:"timezones"`
 	Translations   Translations `json:"translations"`
 	Latitude       string       `json:"latitude"`
 	Longitude      string       `json:"longitude"`
 	Emoji          string       `json:"emoji"`
 	EmojiU         string       `json:"emojiU"`
-	States         []States     `json:"states"`
+	States         []State      `json:"states"`
 }

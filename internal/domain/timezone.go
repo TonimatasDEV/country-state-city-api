@@ -1,6 +1,6 @@
 package domain
 
-type Timezones struct {
+type Timezone struct {
 	ZoneName      string `json:"zoneName"`
 	GmtOffset     int    `json:"gmtOffset"`
 	GmtOffsetName string `json:"gmtOffsetName"`
