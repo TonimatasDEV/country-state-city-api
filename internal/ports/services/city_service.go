@@ -21,7 +21,6 @@ func (service *CityService) GetCityNames(countryName string, stateName string) [
 	for _, country := range countries {
 		if strings.EqualFold(countryName, country.Name) {
 			for _, state := range country.States {
-				println(state.Name)
 				if strings.EqualFold(stateName, state.Name) {
 					for _, city := range state.Cities {
 						cities = append(cities, city.Name)
