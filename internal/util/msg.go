@@ -23,6 +23,7 @@ func create(str string) *Msg {
 }
 
 func (msg *Msg) send(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "application/json")
 	err := json.NewEncoder(w).Encode(msg)
 
 	if err != nil {
@@ -31,6 +32,7 @@ func (msg *Msg) send(w http.ResponseWriter) {
 }
 
 func SendJSON(w http.ResponseWriter, status int, payload any) {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	err := json.NewEncoder(w).Encode(payload)
 
