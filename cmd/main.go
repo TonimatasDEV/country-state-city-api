@@ -21,18 +21,21 @@ func main() {
 	// Services
 	countryService := services.NewCountryService(countryRepo)
 	stateService := services.NewStateService(countryRepo)
+	cityService := services.NewCityService(countryRepo)
 
 	// Handlers
 	countryHandler := handlers.NewCountryHandler(countryService)
 	stateHandler := handlers.NewStateHandler(stateService)
+	cityHandler := handlers.NewCityHandler(cityService)
 
 	// Router
 	router := httprouter.New()
 
 	router.GET("/", handlers.HandleMain)
-	router.GET("/country/names", countryHandler.GetCountriesByName)
-	router.GET("/country/iso2", countryHandler.GetCountriesByIso2)
+	router.GET("/country/names", countryHandler.GetCountryNames)
+	router.GET("/country/iso2", countryHandler.GetCountryIso2)
 	router.GET("/state/:country/names", stateHandler.GetStateNames)
+	router.GET("/city/:country/:state/names", cityHandler.GetCityNames)
 
 	log.Printf("Server running on http://localhost:%s\n", os.Getenv("PORT"))
 
