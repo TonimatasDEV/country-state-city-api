@@ -16,6 +16,10 @@ func NewCountryHandler(service *services.CountryService) *CountryHandler {
 	return &CountryHandler{service: service}
 }
 
-func (h *CountryHandler) GetCountryNames(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+func (h *CountryHandler) GetCountriesByName(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	util.SendJSON(w, http.StatusOK, h.service.GetAllCountryNames())
+}
+
+func (h *CountryHandler) GetCountriesByIso2(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+	util.SendJSON(w, http.StatusOK, h.service.GetAllCountryIso2())
 }

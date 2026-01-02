@@ -23,3 +23,15 @@ func (service *CountryService) GetAllCountryNames() []string {
 
 	return countryNames
 }
+
+func (service *CountryService) GetAllCountryIso2() []string {
+	countries := service.countryRepo.GetAll()
+
+	var countryNames []string
+
+	for _, country := range countries {
+		countryNames = append(countryNames, country.Iso2)
+	}
+
+	return countryNames
+}

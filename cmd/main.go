@@ -28,7 +28,8 @@ func main() {
 	router := httprouter.New()
 
 	router.GET("/", handlers.HandleMain)
-	router.GET("/country/names", countryHandler.GetCountryNames)
+	router.GET("/country/names", countryHandler.GetCountriesByName)
+	router.GET("/country/iso2", countryHandler.GetCountriesByIso2)
 
 	log.Printf("Server running on http://localhost:%s\n", os.Getenv("PORT"))
 
