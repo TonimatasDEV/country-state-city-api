@@ -1,4 +1,4 @@
-module contry-state-city-api
+module country-state-city-api
 
 go 1.25
 

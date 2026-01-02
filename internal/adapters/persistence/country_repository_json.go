@@ -1,9 +1,9 @@
 package persistence
 
 import (
-	"contry-state-city-api/internal/domain"
-	"contry-state-city-api/internal/ports/repositories"
-	json2 "encoding/json"
+	"country-state-city-api/internal/domain"
+	"country-state-city-api/internal/ports/repositories"
+	"encoding/json"
 	"log"
 	"os"
 )
@@ -12,18 +12,18 @@ type JsonCountryRepository struct {
 	data map[int]domain.Country
 }
 
-func (j JsonCountryRepository) GetAll() ([]domain.Country, error) {
+func (j JsonCountryRepository) GetAll() []domain.Country {
 	values := make([]domain.Country, len(j.data))
 
 	for _, country := range j.data {
 		values = append(values, country)
 	}
 
-	return values, nil
+	return values
 }
 
-func (j JsonCountryRepository) GetByID(id int) (domain.Country, error) {
-	return j.data[id], nil
+func (j JsonCountryRepository) GetByID(id int) domain.Country {
+	return j.data[id]
 }
 
 func NewJsonCountryRepository(jsonPath string) repositories.CountryRepository {
@@ -32,9 +32,14 @@ func NewJsonCountryRepository(jsonPath string) repositories.CountryRepository {
 		log.Fatalf("Error while opening file %v: %v", jsonPath, err)
 	}
 
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			log.Printf("Error while closing file %v: %v", jsonPath, err)
+		}
+	}(file)
 
-	decoder := json2.NewDecoder(file)
+	decoder := json.NewDecoder(file)
 
 	var countries []domain.Country
 
