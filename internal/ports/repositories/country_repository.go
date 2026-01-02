@@ -3,6 +3,6 @@ package repositories
 import "country-state-city-api/internal/domain"
 
 type CountryRepository interface {
-	GetAll() []domain.Country
+	Get() map[int]domain.Country
 	GetByID(id int) domain.Country
 }

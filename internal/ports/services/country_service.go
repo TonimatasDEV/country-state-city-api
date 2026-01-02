@@ -13,7 +13,7 @@ func NewCountryService(countryRepo repositories.CountryRepository) *CountryServi
 }
 
 func (service *CountryService) GetAllCountryNames() []string {
-	countries := service.countryRepo.GetAll()
+	countries := service.countryRepo.Get()
 
 	var countryNames []string
 
@@ -25,7 +25,7 @@ func (service *CountryService) GetAllCountryNames() []string {
 }
 
 func (service *CountryService) GetAllCountryIso2() []string {
-	countries := service.countryRepo.GetAll()
+	countries := service.countryRepo.Get()
 
 	var countryNames []string
 

@@ -12,14 +12,8 @@ type JsonCountryRepository struct {
 	data map[int]domain.Country
 }
 
-func (j JsonCountryRepository) GetAll() []domain.Country {
-	values := make([]domain.Country, 0)
-
-	for _, country := range j.data {
-		values = append(values, country)
-	}
-
-	return values
+func (j JsonCountryRepository) Get() map[int]domain.Country {
+	return j.data
 }
 
 func (j JsonCountryRepository) GetByID(id int) domain.Country {
