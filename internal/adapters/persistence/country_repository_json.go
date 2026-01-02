@@ -13,7 +13,7 @@ type JsonCountryRepository struct {
 }
 
 func (j JsonCountryRepository) GetAll() []domain.Country {
-	values := make([]domain.Country, len(j.data))
+	values := make([]domain.Country, 0)
 
 	for _, country := range j.data {
 		values = append(values, country)
