@@ -2,7 +2,6 @@ package services
 
 import (
 	"country-state-city-api/internal/ports/repositories"
-	"strings"
 )
 
 type StateService struct {
@@ -14,17 +13,10 @@ func NewStateService(countryRepo repositories.CountryRepository) *StateService {
 }
 
 func (service *StateService) GetStatesNames(countryName string) []string {
-	countries := service.countryRepo.Get()
-
 	var states []string
 
-	for _, country := range countries {
-		if strings.EqualFold(countryName, country.Name) {
-			for _, state := range country.States {
-				states = append(states, state.Name)
-			}
-			break
-		}
+	for _, state := range service.countryRepo.GetStates(countryName) {
+		states = append(states, state.Name)
 	}
 
 	return states

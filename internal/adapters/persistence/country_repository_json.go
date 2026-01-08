@@ -9,6 +9,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"strings"
 )
 
 type JsonCountryRepository struct {
@@ -17,6 +18,26 @@ type JsonCountryRepository struct {
 
 func (j JsonCountryRepository) Get() map[int]domain.Country {
 	return j.data
+}
+
+func (j JsonCountryRepository) GetStates(countryName string) []domain.State {
+	for _, country := range j.data {
+		if strings.EqualFold(country.Name, countryName) {
+			return country.States
+		}
+	}
+
+	return []domain.State{}
+}
+
+func (j JsonCountryRepository) GetCities(countryName, stateName string) []domain.City {
+	for _, state := range j.GetStates(countryName) {
+		if strings.EqualFold(state.Name, stateName) {
+			return state.Cities
+		}
+	}
+
+	return []domain.City{}
 }
 
 func (j JsonCountryRepository) GetByID(id int) domain.Country {
