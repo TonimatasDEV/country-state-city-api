@@ -17,5 +17,5 @@ func NewCityHandler(service *services.CityService) *CityHandler {
 }
 
 func (h *CityHandler) GetCityNames(w http.ResponseWriter, _ *http.Request, p httprouter.Params) {
-	util.SendJSON(w, http.StatusOK, h.service.GetCityNames(p.ByName("country"), p.ByName("state")))
+	util.SendStringArray(w, http.StatusOK, h.service.GetCityNames(p.ByName("country"), p.ByName("state")))
 }

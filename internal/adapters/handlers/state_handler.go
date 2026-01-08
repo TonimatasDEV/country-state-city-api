@@ -17,5 +17,5 @@ func NewStateHandler(service *services.StateService) *StateHandler {
 }
 
 func (h *StateHandler) GetStateNames(w http.ResponseWriter, _ *http.Request, p httprouter.Params) {
-	util.SendJSON(w, http.StatusOK, h.service.GetStatesNames(p.ByName("country")))
+	util.SendStringArray(w, http.StatusOK, h.service.GetStatesNames(p.ByName("country")))
 }

@@ -9,6 +9,10 @@ type Msg struct {
 	Msg string `json:"msg"`
 }
 
+type StringArrayJson struct {
+	Array []string `json:"result"`
+}
+
 func SendError(w http.ResponseWriter, err error) {
 	create(err.Error()).send(w)
 }
@@ -16,6 +20,10 @@ func SendError(w http.ResponseWriter, err error) {
 func SendString(w http.ResponseWriter, status int, str string) {
 	w.WriteHeader(status)
 	create(str).send(w)
+}
+
+func SendStringArray(w http.ResponseWriter, status int, array []string) {
+	SendJSON(w, status, StringArrayJson{array})
 }
 
 func create(str string) *Msg {

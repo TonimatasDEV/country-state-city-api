@@ -31,9 +31,9 @@ func (h *CountryHandler) GetCountryNames(w http.ResponseWriter, r *http.Request,
 		}
 	}
 
-	util.SendJSON(w, http.StatusOK, filteredCountries)
+	util.SendStringArray(w, http.StatusOK, filteredCountries)
 }
 
 func (h *CountryHandler) GetCountryIso2(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	util.SendJSON(w, http.StatusOK, h.service.GetAllCountryIso2())
+	util.SendStringArray(w, http.StatusOK, h.service.GetAllCountryIso2())
 }
