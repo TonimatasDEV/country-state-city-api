@@ -14,6 +14,7 @@ import (
 
 func main() {
 	os.Setenv("PORT", "8080")
+	os.Setenv("DATA_URL", "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/refs/heads/master/json/countries%2Bstates%2Bcities.json")
 
 	// Repositories
 	countryRepo := persistence.NewJsonCountryRepository("countries+states+cities.json")

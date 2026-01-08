@@ -3,7 +3,10 @@ package persistence
 import (
 	"country-state-city-api/internal/domain"
 	"country-state-city-api/internal/ports/repositories"
+	"country-state-city-api/internal/util"
 	"encoding/json"
+	"errors"
+	"io/fs"
 	"log"
 	"os"
 )
@@ -22,6 +25,19 @@ func (j JsonCountryRepository) GetByID(id int) domain.Country {
 
 func NewJsonCountryRepository(jsonPath string) repositories.CountryRepository {
 	file, err := os.Open(jsonPath)
+
+	if errors.Is(err, fs.ErrNotExist) {
+		log.Println("Downloading data...")
+		err = util.DownloadFile(jsonPath, os.Getenv("DATA_URL"))
+
+		if err != nil {
+			log.Println("Error downloading data.")
+		} else {
+			log.Println("Data downloaded correctly.")
+			return NewJsonCountryRepository(jsonPath)
+		}
+	}
+
 	if err != nil {
 		log.Fatalf("Error while opening file %v: %v", jsonPath, err)
 	}
