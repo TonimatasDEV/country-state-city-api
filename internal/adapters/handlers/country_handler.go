@@ -16,8 +16,22 @@ func NewCountryHandler(service *services.CountryService) *CountryHandler {
 	return &CountryHandler{service: service}
 }
 
-func (h *CountryHandler) GetCountryNames(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
-	util.SendJSON(w, http.StatusOK, h.service.GetAllCountryNames())
+func (h *CountryHandler) GetCountryNames(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	filters := util.GetFilters(r)
+	pop := filters["pop"]
+	var filteredCountries []string
+
+	for _, country := range h.service.GetCountries() {
+		if !pop.IsEmpty() {
+			if country.Population > pop.Int() {
+				filteredCountries = append(filteredCountries, country.Name)
+			}
+		} else {
+			filteredCountries = append(filteredCountries, country.Name)
+		}
+	}
+
+	util.SendJSON(w, http.StatusOK, filteredCountries)
 }
 
 func (h *CountryHandler) GetCountryIso2(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
