@@ -16,15 +16,3 @@ func NewCountryService(countryRepo repositories.CountryRepository) *CountryServi
 func (service *CountryService) GetCountries() map[int]domain.Country {
 	return service.countryRepo.Get()
 }
-
-func (service *CountryService) GetAllCountryIso2() []string {
-	countries := service.countryRepo.Get()
-
-	var countryNames []string
-
-	for _, country := range countries {
-		countryNames = append(countryNames, country.Iso2)
-	}
-
-	return countryNames
-}
