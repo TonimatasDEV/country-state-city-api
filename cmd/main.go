@@ -12,6 +12,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var router *httprouter.Router
+
 func main() {
 	_ = os.Setenv("PORT", "8080")
 	_ = os.Setenv("DATA_URL", "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/refs/heads/master/json/countries%2Bstates%2Bcities.json")
@@ -30,15 +32,15 @@ func main() {
 	cityHandler := handlers.NewCityHandler(cityService)
 
 	// Router
-	router := httprouter.New()
+	router = httprouter.New()
 
-	router.GET("/", handlers.HandleMain)
-	router.GET("/country/names", countryHandler.GetCountryNames)
-	router.GET("/country/nativenames", countryHandler.GetCountryNativeNames)
-	router.GET("/country/iso2", countryHandler.GetCountryIso2)
-	router.GET("/country/iso3", countryHandler.GetCountryIso3)
-	router.GET("/state/:country/names", stateHandler.GetStateNames)
-	router.GET("/city/:country/:state/names", cityHandler.GetCityNames)
+	GET("/", handlers.HandleMain)
+	GET("/country/names", countryHandler.GetCountryNames)
+	GET("/country/nativenames", countryHandler.GetCountryNativeNames)
+	GET("/country/iso2", countryHandler.GetCountryIso2)
+	GET("/country/iso3", countryHandler.GetCountryIso3)
+	GET("/state/:country/names", stateHandler.GetStateNames)
+	GET("/city/:country/:state/names", cityHandler.GetCityNames)
 
 	log.Printf("Server running on http://localhost:%s\n", os.Getenv("PORT"))
 
