@@ -6,7 +6,7 @@ import (
 	"country-state-city-api/internal/util"
 	"net/http"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/gin-gonic/gin"
 )
 
 type CountryHandler struct {
@@ -17,32 +17,32 @@ func NewCountryHandler(service *services.CountryService) *CountryHandler {
 	return &CountryHandler{service: service}
 }
 
-func (h *CountryHandler) GetCountryNames(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	h.sendCountries(w, r, func(country domain.Country) string {
+func (h *CountryHandler) GetCountryNames(c *gin.Context) {
+	h.sendCountries(c, func(country domain.Country) string {
 		return country.Name
 	})
 }
 
-func (h *CountryHandler) GetCountryNativeNames(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	h.sendCountries(w, r, func(country domain.Country) string {
+func (h *CountryHandler) GetCountryNativeNames(c *gin.Context) {
+	h.sendCountries(c, func(country domain.Country) string {
 		return country.Native
 	})
 }
 
-func (h *CountryHandler) GetCountryIso2(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	h.sendCountries(w, r, func(country domain.Country) string {
+func (h *CountryHandler) GetCountryIso2(c *gin.Context) {
+	h.sendCountries(c, func(country domain.Country) string {
 		return country.Iso2
 	})
 }
 
-func (h *CountryHandler) GetCountryIso3(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	h.sendCountries(w, r, func(country domain.Country) string {
+func (h *CountryHandler) GetCountryIso3(c *gin.Context) {
+	h.sendCountries(c, func(country domain.Country) string {
 		return country.Iso3
 	})
 }
 
-func (h *CountryHandler) sendCountries(w http.ResponseWriter, r *http.Request, getInfo func(country domain.Country) string) {
-	filters := util.GetFilters(r)
+func (h *CountryHandler) sendCountries(c *gin.Context, getInfo func(country domain.Country) string) {
+	filters := util.GetFilters(c.Request)
 	pop := filters["pop"]
 	var filteredCountries []string
 
@@ -56,5 +56,9 @@ func (h *CountryHandler) sendCountries(w http.ResponseWriter, r *http.Request, g
 		}
 	}
 
-	util.SendStringArray(w, http.StatusOK, filteredCountries)
+	result := domain.StringArrayJson{
+		Array: filteredCountries,
+	}
+
+	c.JSON(http.StatusOK, result)
 }

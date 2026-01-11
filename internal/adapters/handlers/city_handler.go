@@ -1,11 +1,11 @@
 package handlers
 
 import (
+	"country-state-city-api/internal/domain"
 	"country-state-city-api/internal/ports/services"
-	"country-state-city-api/internal/util"
 	"net/http"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/gin-gonic/gin"
 )
 
 type CityHandler struct {
@@ -16,6 +16,10 @@ func NewCityHandler(service *services.CityService) *CityHandler {
 	return &CityHandler{service: service}
 }
 
-func (h *CityHandler) GetCityNames(w http.ResponseWriter, _ *http.Request, p httprouter.Params) {
-	util.SendStringArray(w, http.StatusOK, h.service.GetCityNames(p.ByName("country"), p.ByName("state")))
+func (h *CityHandler) GetCityNames(c *gin.Context) {
+	result := domain.StringArrayJson{
+		Array: h.service.GetCityNames(c.Params.ByName("country"), c.Params.ByName("state")),
+	}
+
+	c.JSON(http.StatusOK, result)
 }

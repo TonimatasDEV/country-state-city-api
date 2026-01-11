@@ -1,10 +1,9 @@
 package handlers
 
 import (
-	"country-state-city-api/internal/util"
 	"net/http"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/gin-gonic/gin"
 )
 
 type MainMessage struct {
@@ -15,7 +14,7 @@ type MainMessage struct {
 	IssueTracker string `json:"issueTracker"`
 }
 
-func HandleMain(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+func HandleMain(c *gin.Context) {
 	mainMessage := MainMessage{
 		Msg:          "Hello World! This is the best api to get countries, states and cities!",
 		Wiki:         "https://github.com/TonimatasDEV/country-state-city-api/wiki",
@@ -24,5 +23,5 @@ func HandleMain(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 		IssueTracker: "https://github.com/TonimatasDEV/country-state-city-api/issues",
 	}
 
-	util.SendJSON(w, http.StatusOK, mainMessage)
+	c.JSON(http.StatusOK, mainMessage)
 }

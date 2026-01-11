@@ -14,5 +14,6 @@ With this API you can get countries, states and cities around the world.
 
 ## Build
 ```shell
+export GIN_MODE=release
 go build -o dist/CountryStateCityApi ./cmd
 ```
