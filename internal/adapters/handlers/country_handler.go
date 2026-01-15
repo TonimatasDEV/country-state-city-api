@@ -4,6 +4,7 @@ import (
 	"country-state-city-api/internal/ports/services"
 	"country-state-city-api/internal/util"
 	"net/http"
+	"sort"
 
 	"github.com/gin-gonic/gin"
 )
@@ -48,6 +49,10 @@ func (h *CountryHandler) GetCountries(c *gin.Context) {
 			filteredCountries = append(filteredCountries, countryJson)
 		}
 	}
+
+	sort.Slice(filteredCountries, func(i, j int) bool {
+		return filteredCountries[i].Name < filteredCountries[j].Name
+	})
 
 	result := Send{
 		Result: filteredCountries,
