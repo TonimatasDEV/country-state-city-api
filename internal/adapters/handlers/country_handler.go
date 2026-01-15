@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"country-state-city-api/internal/domain"
 	"country-state-city-api/internal/ports/services"
 	"country-state-city-api/internal/util"
 	"net/http"
@@ -17,47 +16,41 @@ func NewCountryHandler(service *services.CountryService) *CountryHandler {
 	return &CountryHandler{service: service}
 }
 
-func (h *CountryHandler) GetCountryNames(c *gin.Context) {
-	h.sendCountries(c, func(country domain.Country) string {
-		return country.Name
-	})
+type Send struct {
+	Result []CountryJson `json:"result"`
 }
 
-func (h *CountryHandler) GetCountryNativeNames(c *gin.Context) {
-	h.sendCountries(c, func(country domain.Country) string {
-		return country.Native
-	})
+type CountryJson struct {
+	Name       string `json:"name"`
+	NativeName string `json:"native_name"`
+	Iso2       string `json:"iso2"`
+	Iso3       string `json:"iso3"`
 }
 
-func (h *CountryHandler) GetCountryIso2(c *gin.Context) {
-	h.sendCountries(c, func(country domain.Country) string {
-		return country.Iso2
-	})
-}
-
-func (h *CountryHandler) GetCountryIso3(c *gin.Context) {
-	h.sendCountries(c, func(country domain.Country) string {
-		return country.Iso3
-	})
-}
-
-func (h *CountryHandler) sendCountries(c *gin.Context, getInfo func(country domain.Country) string) {
+func (h *CountryHandler) GetCountries(c *gin.Context) {
 	filters := util.GetFilters(c.Request)
 	pop := filters["pop"]
-	var filteredCountries []string
+	var filteredCountries []CountryJson
 
 	for _, country := range h.service.GetCountries() {
+		countryJson := CountryJson{
+			Name:       country.Name,
+			NativeName: country.Native,
+			Iso2:       country.Iso2,
+			Iso3:       country.Iso3,
+		}
+
 		if !pop.IsEmpty() {
 			if country.Population > pop.Int() {
-				filteredCountries = append(filteredCountries, getInfo(country))
+				filteredCountries = append(filteredCountries, countryJson)
 			}
 		} else {
-			filteredCountries = append(filteredCountries, getInfo(country))
+			filteredCountries = append(filteredCountries, countryJson)
 		}
 	}
 
-	result := domain.StringArrayJson{
-		Array: filteredCountries,
+	result := Send{
+		Result: filteredCountries,
 	}
 
 	c.JSON(http.StatusOK, result)

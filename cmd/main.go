@@ -40,10 +40,7 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/", handlers.HandleMain)
-	router.GET("/country/names", countryHandler.GetCountryNames)
-	router.GET("/country/nativenames", countryHandler.GetCountryNativeNames)
-	router.GET("/country/iso2", countryHandler.GetCountryIso2)
-	router.GET("/country/iso3", countryHandler.GetCountryIso3)
+	router.GET("/countries", countryHandler.GetCountries)
 	router.GET("/state/:country/names", stateHandler.GetStateNames)
 	router.GET("/city/:country/:state/names", cityHandler.GetCityNames)
 
