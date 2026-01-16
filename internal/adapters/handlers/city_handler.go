@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"country-state-city-api/internal/domain"
 	"country-state-city-api/internal/ports/services"
 	"net/http"
 
@@ -16,9 +15,23 @@ func NewCityHandler(service *services.CityService) *CityHandler {
 	return &CityHandler{service: service}
 }
 
+type SendCities struct {
+	Result []CityJson `json:"result"`
+}
+
+type CityJson struct {
+	Name string `json:"name"`
+}
+
 func (h *CityHandler) GetCities(c *gin.Context) {
-	result := domain.StringArrayJson{
-		Array: h.service.GetCityNames(c.Params.ByName("country"), c.Params.ByName("state")),
+	var cities []CityJson
+
+	for _, city := range h.service.GetCities(c.Params.ByName("country"), c.Params.ByName("state")) {
+		cities = append(cities, CityJson{city.Name})
+	}
+
+	result := SendCities{
+		Result: cities,
 	}
 
 	c.JSON(http.StatusOK, result)

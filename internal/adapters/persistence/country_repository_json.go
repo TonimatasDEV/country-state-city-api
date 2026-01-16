@@ -30,9 +30,9 @@ func (j JsonCountryRepository) GetStates(countryCode string) []domain.State {
 	return []domain.State{}
 }
 
-func (j JsonCountryRepository) GetCities(countryName, stateName string) []domain.City {
-	for _, state := range j.GetStates(countryName) {
-		if strings.EqualFold(state.Name, stateName) {
+func (j JsonCountryRepository) GetCities(countryCode, stateCode string) []domain.City {
+	for _, state := range j.GetStates(countryCode) {
+		if strings.EqualFold(state.Iso2, stateCode) {
 			return state.Cities
 		}
 	}

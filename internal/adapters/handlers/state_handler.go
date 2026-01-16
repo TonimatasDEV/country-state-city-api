@@ -26,8 +26,8 @@ type StateJson struct {
 }
 
 func (h *StateHandler) GetStates(c *gin.Context) {
-
 	var states []StateJson
+
 	for _, state := range h.service.GetStates(c.Params.ByName("country")) {
 		states = append(states, StateJson{
 			Name:       state.Name,
