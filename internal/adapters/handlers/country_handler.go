@@ -17,7 +17,7 @@ func NewCountryHandler(service *services.CountryService) *CountryHandler {
 	return &CountryHandler{service: service}
 }
 
-type Send struct {
+type SendCountries struct {
 	Result []CountryJson `json:"result"`
 }
 
@@ -54,7 +54,7 @@ func (h *CountryHandler) GetCountries(c *gin.Context) {
 		return filteredCountries[i].Name < filteredCountries[j].Name
 	})
 
-	result := Send{
+	result := SendCountries{
 		Result: filteredCountries,
 	}
 

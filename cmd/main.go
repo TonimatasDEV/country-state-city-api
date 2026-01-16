@@ -41,8 +41,8 @@ func main() {
 
 	router.GET("/", handlers.HandleMain)
 	router.GET("/countries", countryHandler.GetCountries)
-	router.GET("/state/:country/names", stateHandler.GetStateNames)
-	router.GET("/city/:country/:state/names", cityHandler.GetCityNames)
+	router.GET("/states/:country", stateHandler.GetStates)
+	router.GET("/cities/:country/:state", cityHandler.GetCities)
 
 	log.Printf("Server running on http://localhost:%s\n", os.Getenv("PORT"))
 

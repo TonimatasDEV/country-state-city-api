@@ -1,6 +1,7 @@
 package services
 
 import (
+	"country-state-city-api/internal/domain"
 	"country-state-city-api/internal/ports/repositories"
 )
 
@@ -12,12 +13,6 @@ func NewStateService(countryRepo repositories.CountryRepository) *StateService {
 	return &StateService{countryRepo: countryRepo}
 }
 
-func (service *StateService) GetStatesNames(countryName string) []string {
-	var states []string
-
-	for _, state := range service.countryRepo.GetStates(countryName) {
-		states = append(states, state.Name)
-	}
-
-	return states
+func (service *StateService) GetStates(countryCode string) []domain.State {
+	return service.countryRepo.GetStates(countryCode)
 }

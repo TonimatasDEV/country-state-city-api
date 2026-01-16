@@ -16,7 +16,7 @@ func NewCityHandler(service *services.CityService) *CityHandler {
 	return &CityHandler{service: service}
 }
 
-func (h *CityHandler) GetCityNames(c *gin.Context) {
+func (h *CityHandler) GetCities(c *gin.Context) {
 	result := domain.StringArrayJson{
 		Array: h.service.GetCityNames(c.Params.ByName("country"), c.Params.ByName("state")),
 	}
