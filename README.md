@@ -6,8 +6,10 @@ With this API you can get countries, states and cities around the world.
 
 ## Routes
 - https://country-state-city.net/countries
-- https://country-state-city.net/state/:country/names
-- https://country-state-city.net/city/:country/:state/names
+- https://country-state-city.net/states/:country
+- https://country-state-city.net/cities/:country/:state
+
+The params :country and :state are Iso2.
 
 ## Build
 ```shell
