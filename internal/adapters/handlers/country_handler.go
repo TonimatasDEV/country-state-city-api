@@ -32,10 +32,7 @@ func (h *CountryHandler) GetCountries(c *gin.Context) {
 	pop := filters["pop"]
 	var filteredCountries []CountryJson
 
-	countries := h.service.GetCountries()
-	for i := 0; i < len(countries); i++ {
-		country := countries[i]
-
+	for _, country := range h.service.GetCountries() {
 		countryJson := CountryJson{
 			Name:       country.Name,
 			NativeName: country.Native,

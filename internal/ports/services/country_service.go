@@ -13,6 +13,6 @@ func NewCountryService(countryRepo repositories.CountryRepository) *CountryServi
 	return &CountryService{countryRepo: countryRepo}
 }
 
-func (service *CountryService) GetCountries() map[int]domain.Country {
+func (service *CountryService) GetCountries() []domain.Country {
 	return service.countryRepo.Get()
 }

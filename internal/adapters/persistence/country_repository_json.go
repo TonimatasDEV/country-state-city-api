@@ -13,10 +13,10 @@ import (
 )
 
 type JsonCountryRepository struct {
-	data map[int]domain.Country
+	data []domain.Country
 }
 
-func (j JsonCountryRepository) Get() map[int]domain.Country {
+func (j JsonCountryRepository) Get() []domain.Country {
 	return j.data
 }
 
@@ -78,11 +78,5 @@ func NewJsonCountryRepository(jsonPath string) repositories.CountryRepository {
 		log.Fatalf("Error while decoding file %v: %v", jsonPath, err)
 	}
 
-	var countryMap = make(map[int]domain.Country)
-
-	for _, country := range countries {
-		countryMap[country.ID] = country
-	}
-
-	return JsonCountryRepository{data: countryMap}
+	return JsonCountryRepository{data: countries}
 }
