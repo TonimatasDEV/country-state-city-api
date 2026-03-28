@@ -17,7 +17,7 @@ var router *gin.Engine
 func main() {
 	_ = os.Setenv("HOST", "0.0.0.0")
 	_ = os.Setenv("PORT", "8080")
-	_ = os.Setenv("DATA_URL", "https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/refs/heads/master/json/countries%2Bstates%2Bcities.json")
+	_ = os.Setenv("DATA_URL", "https://github.com/dr5hn/countries-states-cities-database/releases/latest/download/json-countries+states+cities.json.gz")
 	_ = os.Setenv("SSL_ENABLED", "false")
 	_ = os.Setenv("SSL_CERT", "/etc/letsencrypt/live/example.com/fullchain.pem")
 	_ = os.Setenv("SSL_KEY", "/etc/letsencrypt/live/example.com/privkey.pem")

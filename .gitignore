@@ -1,3 +1,4 @@
 .idea
 countries+states+cities.json
 dist
+json-countries+states+cities.json.gz
