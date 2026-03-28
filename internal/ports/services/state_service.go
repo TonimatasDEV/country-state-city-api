@@ -14,5 +14,23 @@ func NewStateService(countryRepo repositories.CountryRepository) *StateService {
 }
 
 func (service *StateService) GetStates(countryCode string) []domain.State {
-	return service.countryRepo.GetStates(countryCode)
+	states := service.countryRepo.GetStates(countryCode)
+
+	// Start - Temporal fix to Spanish states
+	var result []domain.State
+
+	if countryCode == "es" {
+		for _, state := range states {
+			if state.Type == "autonomous community" {
+				continue
+			}
+
+			result = append(result, state)
+		}
+	} else {
+		result = append(result, states...)
+	}
+	// End
+
+	return result
 }
